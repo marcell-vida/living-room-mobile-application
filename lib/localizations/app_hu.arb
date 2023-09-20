@@ -14,5 +14,7 @@
   "signUpExceptionWeakPassword": "A megadott jelszó túl gyenge",
   "signUpSuccess": "Sikeres regisztráció",
   "verifyEmailExceptionEmailNotSent": "A visszaigazoló email-t nem lehetett elküldedni",
-  "verifyEmailSuccessSent": "Visszaigazoló email elküldve"
+  "verifyEmailSuccessSent": "Visszaigazoló email elküldve",
+  "databaseExceptionPermissionDenied": "Engedély megtagadva",
+  "databaseExceptionNoDocument": "Nem található a keresett elem"
 }

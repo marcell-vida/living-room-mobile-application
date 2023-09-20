@@ -2,7 +2,7 @@ import 'package:living_room/extension/results/auth_exception_extension.dart';
 import 'package:living_room/extension/results/sign_up_exception_extension.dart';
 import 'package:living_room/extension/results/success_message_extension.dart';
 import 'package:living_room/extension/results/verify_email_exception_extension.dart';
-import 'package:living_room/model/authentication/local_user.dart';
+import 'package:living_room/model/authentication/auth_user.dart';
 import 'package:living_room/service/authentication/authentication_base.dart';
 import 'package:living_room/service/authentication/firebase/firebase_authentication.dart';
 

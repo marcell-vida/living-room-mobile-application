@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:living_room/extension/context_extension.dart';
+import 'package:living_room/extension/on_built_in/context_extension.dart';
 
 // messages indicating errors occurring during login
 enum AuthException {

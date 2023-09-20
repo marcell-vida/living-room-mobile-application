@@ -43,6 +43,7 @@ dependencies:
   google_fonts: ^6.0.0
   arb_utils: ^0.1.0+1
   collection: ^1.17.1
+  cloud_firestore: ^4.9.2
 
 dev_dependencies:
   flutter_test:

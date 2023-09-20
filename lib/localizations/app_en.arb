@@ -14,5 +14,7 @@
   "signUpExceptionWeakPassword": "The given password is too weak",
   "signUpSuccess": "Successful registration",
   "verifyEmailExceptionEmailNotSent": "Verification email could not be sent",
-  "verifyEmailSuccessSent": "Verification email sent"
+  "verifyEmailSuccessSent": "Verification email sent",
+  "databaseExceptionPermissionDenied": "Permission denied",
+  "databaseExceptionNoDocument": "The element in demand was not found"
 }
