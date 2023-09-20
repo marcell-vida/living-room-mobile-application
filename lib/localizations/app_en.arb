@@ -1,0 +1,18 @@
+{
+  "appName": "Living Room",
+  "globalExceptionInvalidEmail": "The given email is invalid",
+  "globalExceptionOperationNotAllowed": "This operation is not allowed",
+  "globalExceptionTooManyRequests": "Too many requests were made",
+  "globalExceptionUnknownError": "Unknown error",
+  "signInExceptionEmailNotVerified": "Your email is not verified yet",
+  "signInExceptionNetworkError": "A network error has occured",
+  "signInExceptionUserDisabled": "The user is disabled",
+  "signInExceptionUserNotFound": "The given user does not exist",
+  "signInExceptionWrongPassword": "Incorrect password",
+  "signInSuccess": "Successful login",
+  "signUpExceptionEmailAlreadyUsed": "The email is already in use",
+  "signUpExceptionWeakPassword": "The given password is too weak",
+  "signUpSuccess": "Successful registration",
+  "verifyEmailExceptionEmailNotSent": "Verification email could not be sent",
+  "verifyEmailSuccessSent": "Verification email sent"
+}

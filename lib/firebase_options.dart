@@ -54,7 +54,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyACXcr9X5SCqeogugcxQeZ5ChyM-SFE1Y0',
-    appId: '1:51045257045:android:45d5e83e56aac8bb5da9dc',
+    appId: '1:51045257045:android:b2f0ab9a94f64ffa5da9dc',
     messagingSenderId: '51045257045',
     projectId: 'living-room-9bcc0',
     storageBucket: 'living-room-9bcc0.appspot.com',
