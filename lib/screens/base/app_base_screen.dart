@@ -30,16 +30,16 @@ abstract class AppBaseScreen extends StatelessWidget {
                   'BaseScreen: state.internetConnectivityState == ${state.networkConnectionStatus}');
 
               if (state.currentUserStatus == null) {
-                Navigator.of(context).pushReplacementNamed('/');
+                Navigator.of(context).pushReplacementNamed(AppRoutes.loading);
               } else if (state.currentUserStatus ==
                   CurrentUserStatus.signedInEmailNotVerified) {
-                Navigator.of(context).pushReplacementNamed('/verify');
+                Navigator.of(context).pushReplacementNamed(AppRoutes.verify);
               } else if (state.currentUserStatus ==
                   CurrentUserStatus.signedIn) {
                 // navigate to home
                 if (context.mounted) {
                   Navigator.pushNamedAndRemoveUntil(
-                      context, '/home', (route) => false);
+                      context, AppRoutes.home, (route) => false);
                 }
               } else if (state.currentUserStatus ==
                   CurrentUserStatus.signedOut) {
@@ -48,9 +48,9 @@ abstract class AppBaseScreen extends StatelessWidget {
               } else if (state.currentUserStatus ==
                   CurrentUserStatus.userBanned) {
                 Navigator.pushNamedAndRemoveUntil(
-                    context, '/banned', (route) => false);
+                    context, AppRoutes.banned, (route) => false);
               } else {
-                Navigator.of(context).pushNamed('/wrong');
+                Navigator.of(context).pushNamed(AppRoutes.wrong);
               }
             },
           ),
@@ -67,10 +67,10 @@ abstract class AppBaseScreen extends StatelessWidget {
 
               if (state.networkConnectionStatus ==
                   NetworkConnectionStatus.connectedNoInternet) {
-                Navigator.of(context).pushNamedIfNotCurrent('/no_connection');
+                Navigator.of(context).pushNamedIfNotCurrent(AppRoutes.noConnection);
               } else if (state.networkConnectionStatus ==
                   NetworkConnectionStatus.notConnected) {
-                Navigator.of(context).pushNamedIfNotCurrent('/no_connection');
+                Navigator.of(context).pushNamedIfNotCurrent(AppRoutes.noConnection);
               }
             },
           ),

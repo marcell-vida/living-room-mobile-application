@@ -26,5 +26,8 @@
   "globalPassword": "Password",
   "globalPasswordAgain": "Password again",
   "globalSignIn": "Sign In",
-  "globalSignUp": "Sign Up"
+  "globalSignUp": "Sign Up",
+  "globalSignOut": "Sign Out",
+  "verifyEmailScreenSendVerify": "Send verification email",
+  "verifyEmailScreenVerifyYourEmail": "Verify your email"
 }

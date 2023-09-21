@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:living_room/screens/authentication/sign_in_screen.dart';
 import 'package:living_room/screens/authentication/sign_up_screen.dart';
-import 'package:living_room/screens/home_screen.dart';
+import 'package:living_room/screens/authentication/verify_email_screen.dart';
+import 'package:living_room/screens/living_room/home_screen.dart';
 import 'package:living_room/util/constants.dart';
 
 class RouteGenerator {
@@ -13,10 +14,12 @@ class RouteGenerator {
         return MaterialPageRoute(settings: const RouteSettings(name: AppRoutes.signIn), builder: (_) => SignInScreen());
       case AppRoutes.signUp:
         return MaterialPageRoute(settings: const RouteSettings(name: AppRoutes.signUp), builder: (_) => SignUpScreen());
-      case '/':
-        return MaterialPageRoute(settings: const RouteSettings(name: '/'), builder: (_) => SignInScreen());
+      case AppRoutes.verify:
+        return MaterialPageRoute(settings: const RouteSettings(name: AppRoutes.verify), builder: (_) => const VerifyEmailScreen());
+      case AppRoutes.home:
+        return MaterialPageRoute(settings: const RouteSettings(name: AppRoutes.home), builder: (_) => const HomeScreen());
       default:
-        return MaterialPageRoute(settings: const RouteSettings(name: '/'), builder: (_) => const HomeScreen());
+        return MaterialPageRoute(settings: const RouteSettings(name: '/'), builder: (_) => SignInScreen());
     }
   }
 }

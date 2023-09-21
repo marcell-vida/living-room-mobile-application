@@ -82,6 +82,7 @@ class SignUpScreen extends ContentInCardBaseScreen {
       validatorMessage: () =>
           context.states.signUp.invalidEmailMessage?.getErrorMessage(context),
       textInputAction: TextInputAction.next,
+      leadIcon: Icons.email_outlined,
     );
   }
 
@@ -101,6 +102,7 @@ class SignUpScreen extends ContentInCardBaseScreen {
             validatorMessage: () => context.states.signUp.invalidPasswordMessage
                 ?.getErrorMessage(context),
             textInputAction: TextInputAction.next,
+            leadIcon: Icons.lock_outlined,
           );
         });
   }
@@ -121,6 +123,7 @@ class SignUpScreen extends ContentInCardBaseScreen {
             validatorMessage: () => context.states.signUp.invalidPasswordAgainMessage
                 ?.getErrorMessage(context),
             textInputAction: TextInputAction.done,
+            leadIcon: Icons.lock_outlined,
           );
         });
   }

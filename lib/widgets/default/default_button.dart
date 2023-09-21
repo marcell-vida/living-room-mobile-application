@@ -42,8 +42,7 @@ class DefaultButton extends StatelessWidget {
                 : null,
             shape: RoundedRectangleBorder(
                 borderRadius: borderRadius ?? Constants.borderRadius),
-            minimumSize: const Size(150, 48),
-            maximumSize: const Size(150, 150),
+            minimumSize: const Size.fromHeight(50),
             elevation: elevation ?? (isEnabled == false ? 0 : 3),
             backgroundColor: isEnabled == false
                 ? AppColors.purple50

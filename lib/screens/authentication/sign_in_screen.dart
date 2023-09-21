@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:living_room/extension/on_built_in/context_extension.dart';
 import 'package:living_room/screens/base/content_in_card_base_screen.dart';
 import 'package:living_room/extension/results/success_message_extension.dart';
@@ -78,6 +77,7 @@ class SignInScreen extends ContentInCardBaseScreen {
       validatorMessage: () =>
           context.states.signIn.invalidEmailMessage?.getErrorMessage(context),
       textInputAction: TextInputAction.next,
+      leadIcon: Icons.email_outlined,
     );
   }
 
@@ -97,6 +97,7 @@ class SignInScreen extends ContentInCardBaseScreen {
             validatorMessage: () => context.states.signIn.invalidPasswordMessage
                 ?.getErrorMessage(context),
             textInputAction: TextInputAction.done,
+            leadIcon: Icons.lock_outlined,
           );
         });
   }

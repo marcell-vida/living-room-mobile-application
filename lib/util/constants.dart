@@ -37,6 +37,12 @@ class AppColors {
 }
 
 class AppRoutes{
+  static const loading = '/';
   static const signIn = '/signIn';
   static const signUp = '/signUp';
+  static const home = '/home';
+  static const verify = '/verify';
+  static const banned = '/banned';
+  static const wrong = '/wrong';
+  static const noConnection = '/no_connection';
 }

@@ -22,5 +22,8 @@
   "globalPassword": "Jelszó",
   "globalPasswordAgain": "Jelszó újra",
   "globalSignIn": "Bejelentkezés",
-  "globalSignUp": "Regisztráció"
+  "globalSignUp": "Regisztráció",
+  "globalSignOut": "Kijelentkezés",
+  "verifyEmailScreenSendVerify": "Visszaigazoló email küldése",
+  "verifyEmailScreenVerifyYourEmail": "Email-cím visszaigazolása"
 }

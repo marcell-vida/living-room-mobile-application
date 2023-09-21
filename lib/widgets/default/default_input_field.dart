@@ -11,6 +11,7 @@ class DefaultInputField extends StatelessWidget {
   final bool? obscureText;
   final String? suffixText;
   final IconData? suffixIcon;
+  final IconData? leadIcon;
   final TextInputAction? textInputAction;
   final int maxLength;
   final Color textColor;
@@ -28,6 +29,7 @@ class DefaultInputField extends StatelessWidget {
     this.obscureText,
     this.suffixText,
     this.suffixIcon,
+    this.leadIcon,
     this.textInputAction,
     this.validator,
     this.validatorMessage,
@@ -92,6 +94,7 @@ class DefaultInputField extends StatelessWidget {
             fontWeight: FontWeight.w600,
             color: AppColors.red),
         suffixIcon: suffix,
+        prefixIcon: Icon(leadIcon, color: AppColors.whiteOp30)
       ),
     ));
   }
