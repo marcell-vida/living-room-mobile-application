@@ -27,14 +27,14 @@ class BlurredCard extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: Constants.borderRadius,
                   border: Border.all(
-                      color: Colors.white.withOpacity(0.4),
+                      color: AppColors.whiteOp30,
                       width: Constants.borderWidth),
                   gradient: LinearGradient(
                     begin: Alignment.topRight,
                     end: Alignment.bottomLeft,
                     colors: [
-                      Colors.white.withOpacity(0.15),
-                      Colors.white.withOpacity(0.05)
+                      AppColors.white.withOpacity(0.15),
+                      AppColors.white.withOpacity(0.05)
                     ],
                   )),
             ),

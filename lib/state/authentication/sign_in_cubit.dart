@@ -20,9 +20,12 @@ class SignInCubit extends Cubit<SignInState> {
     return _authenticationService.currentUser;
   }
 
+  void toggleObscurePassword() {
+    emit(state.copyWith(obscurePassword: !state.obscurePassword));
+  }
+
   void modifyEmail(String newValue) {
-    emit(state.copyWith(
-        email: newValue, signInStatus: ProcessStatus.idle));
+    emit(state.copyWith(email: newValue, signInStatus: ProcessStatus.idle));
     _validateEmail();
   }
 
@@ -31,12 +34,10 @@ class SignInCubit extends Cubit<SignInState> {
     _validatePassword();
   }
 
-  void toggleObscurePassword(){
-    emit(state.copyWith(obscurePassword: !state.obscurePassword));
-  }
-
   void signInWithEmailAndPassword() async {
-    if (state.isEmailValid && state.isPasswordValid) {
+    if (state.isEmailValid &&
+        state.isPasswordValid &&
+        state.signInStatus != ProcessStatus.processing) {
       emit(state.copyWith(signInStatus: ProcessStatus.processing));
 
       _authenticationService.signIn(

@@ -61,6 +61,10 @@ class DefaultInputField extends StatelessWidget {
       obscureText: obscureText == true,
       style: TextStyle(color: textColor),
       decoration: InputDecoration(
+        errorBorder: OutlineInputBorder(
+          borderRadius: Constants.borderRadius,
+          borderSide: BorderSide(
+              width: Constants.borderWidth, color: AppColors.red),),
         focusedBorder: OutlineInputBorder(
             borderRadius: Constants.borderRadius,
             borderSide: BorderSide(
@@ -68,7 +72,7 @@ class DefaultInputField extends StatelessWidget {
         enabledBorder: OutlineInputBorder(
           borderRadius: Constants.borderRadius,
           borderSide: BorderSide(
-              width: Constants.borderWidth, color: AppColors.white),),
+              width: Constants.borderWidth, color: AppColors.whiteOp30),),
         contentPadding: AppPaddings.inputField,
         border: OutlineInputBorder(borderRadius: Constants.borderRadius),
         labelText: hintText,
@@ -109,6 +113,6 @@ class DefaultInputField extends StatelessWidget {
     return ExcludeFocus(
         child: IconButton(
             onPressed: () => onPressed?.call(),
-            icon: Icon(iconData, color: AppColors.white)));
+            icon: Icon(iconData, color: AppColors.whiteOp30)));
   }
 }

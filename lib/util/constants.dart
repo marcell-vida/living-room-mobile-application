@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class Constants {
-  static get borderRadius => BorderRadius.circular(12);
+  static get borderRadius => BorderRadius.circular(20);
+
+  static get borderRadiusLarge => BorderRadius.circular(50);
 
   static double borderWidth = 2.0;
 }
@@ -28,7 +30,13 @@ class AppColors {
   static const Color black = Color(0xFF222222);
   static const Color black36 = Color(0x5c222222);
   static const Color white = Color(0xffFFFFFF);
+  static Color whiteOp30 = white.withOpacity(0.3);
   static const Color grey = Color(0xFF888888);
   static const Color grey2 = Color(0xFFAAAAAA);
   static const Color grey3 = Color(0xFFD2D2D2);
+}
+
+class AppRoutes{
+  static const signIn = '/signIn';
+  static const signUp = '/signUp';
 }

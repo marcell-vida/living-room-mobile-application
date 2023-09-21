@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_room/extension/on_built_in/navigator_state_extension.dart';
 import 'package:living_room/state/base/app_base_cubit.dart';
 import 'package:living_room/state/base/app_base_state.dart';
+import 'package:living_room/util/constants.dart';
 
 /// This screen provides tha basic functions of the application.
 ///
@@ -43,7 +44,7 @@ abstract class AppBaseScreen extends StatelessWidget {
               } else if (state.currentUserStatus ==
                   CurrentUserStatus.signedOut) {
                 Navigator.pushNamedAndRemoveUntil(
-                    context, '/login', (route) => false);
+                    context, AppRoutes.signIn, (route) => false);
               } else if (state.currentUserStatus ==
                   CurrentUserStatus.userBanned) {
                 Navigator.pushNamedAndRemoveUntil(
