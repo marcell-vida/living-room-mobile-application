@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:living_room/extension/on_built_in/navigator_state_extension.dart';
@@ -12,6 +13,7 @@ import 'package:living_room/state/base/app_base_state.dart';
 abstract class AppBaseScreen extends StatelessWidget {
   const AppBaseScreen({super.key});
 
+  @nonVirtual
   @override
   Widget build(BuildContext context) {
     return MultiBlocListener(
@@ -72,14 +74,8 @@ abstract class AppBaseScreen extends StatelessWidget {
             },
           ),
         ],
-        child: MultiBlocProvider(
-            providers: [...?providers(context)],
-            child: Builder(builder: (context) {
-              return Scaffold(body: SafeArea(child: body(context)));
-            })));
+        child: body(context));
   }
 
   Widget body(BuildContext context);
-
-  List<BlocProvider>? providers(BuildContext context);
 }

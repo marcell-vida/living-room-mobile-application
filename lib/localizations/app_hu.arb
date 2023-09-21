@@ -16,5 +16,11 @@
   "verifyEmailExceptionEmailNotSent": "A visszaigazoló email-t nem lehetett elküldedni",
   "verifyEmailSuccessSent": "Visszaigazoló email elküldve",
   "databaseExceptionPermissionDenied": "Engedély megtagadva",
-  "databaseExceptionNoDocument": "Nem található a keresett elem"
+  "databaseExceptionNoDocument": "Nem található a keresett elem",
+  "globalProcessingRequest": "Feldolgozás...",
+  "globalEmail": "Email",
+  "globalPassword": "Jelszó",
+  "globalPasswordAgain": "Jelszó újra",
+  "globalSignIn": "Bejelentkezés",
+  "globalSignUp": "Regisztráció"
 }

@@ -16,5 +16,15 @@
   "verifyEmailExceptionEmailNotSent": "Verification email could not be sent",
   "verifyEmailSuccessSent": "Verification email sent",
   "databaseExceptionPermissionDenied": "Permission denied",
-  "databaseExceptionNoDocument": "The element in demand was not found"
+  "databaseExceptionNoDocument": "The element in demand was not found",
+  "invalidInputEmpty": "Field may not be empty",
+  "invalidInputEmail": "Invalid email address",
+  "invalidInputPassword": "Invalid password",
+  "invalidInputPasswordsNotMatch": "The given passwords do not match",
+  "globalProcessingRequest": "Processing...",
+  "globalEmail": "Email",
+  "globalPassword": "Password",
+  "globalPasswordAgain": "Password again",
+  "globalSignIn": "Sign In",
+  "globalSignUp": "Sign Up"
 }
