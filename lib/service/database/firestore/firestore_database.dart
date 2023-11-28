@@ -1,10 +1,47 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:living_room/extension/firebase/firestore_extension.dart';
-import 'package:living_room/extension/results/database_exception_extension.dart';
-import 'package:living_room/model/base/firestore_item.dart';
-import 'package:living_room/model/database/datbase_user.dart';
+import 'package:living_room/extension/result/database_exception_extension.dart';
+import 'package:living_room/main.dart';
+import 'package:living_room/model/database/base/firestore_item.dart';
+import 'package:living_room/model/database/families/family.dart';
+import 'package:living_room/model/database/families/family_member.dart';
+import 'package:living_room/model/database/families/family_member_goal.dart';
+import 'package:living_room/model/database/families/family_member_task.dart';
+import 'package:living_room/model/database/users/database_user.dart';
+import 'package:living_room/model/database/users/invitation.dart';
 import 'package:living_room/service/database/database_base.dart';
+
+typedef FirestoreItemMapFunction = FirestoreItem Function(
+    MapEntry<DocumentReference<Object?>, Map<String, dynamic>>);
+
+FirestoreItemMapFunction _mapInv = (doc) => Invitation.fromSnapshot(doc);
+FirestoreItemMapFunction _mapFam = (doc) => Family.fromSnapshot(doc);
+FirestoreItemMapFunction _mapMem = (doc) => FamilyMember.fromSnapshot(doc);
+FirestoreItemMapFunction _mapGoal = (doc) => FamilyMemberGoal.fromSnapshot(doc);
+FirestoreItemMapFunction _mapTask = (doc) => FamilyMemberTask.fromSnapshot(doc);
+FirestoreItemMapFunction _mapUser = (doc) => DatabaseUser.fromSnapshot(doc);
+
+FirestoreItemMapFunction? _firestoreItemMapFunction<T>() {
+  debugPrint('_firestoreItemMapFunction: T is $T');
+
+  if (T == DatabaseUser) {
+    debugPrint('_firestoreItemMapFunction: T is DatabaseUser in if statement');
+    return _mapUser;
+  } else if (T == Invitation) {
+    return _mapInv;
+  } else if (T == Family) {
+    return _mapFam;
+  } else if (T == FamilyMember) {
+    return _mapMem;
+  } else if (T == FamilyMemberTask) {
+    return _mapTask;
+  } else if (T == FamilyMemberGoal) {
+    log.i('_firestoreItemMapFunction: T is FamilyMemberGoal in if statement');
+    return _mapGoal;
+  }
+  return null;
+}
 
 class DatabaseImp extends DatabaseBase {
   //#region Singleton factory
@@ -18,6 +55,7 @@ class DatabaseImp extends DatabaseBase {
 
   //#endregion
 
+  //#region Basics
   final rawDatabaseExceptions = {
     "permission-denied": DatabaseException.permissionDenied,
   };
@@ -41,7 +79,7 @@ class DatabaseImp extends DatabaseBase {
   }
 
   @override
-  Future<FirestoreItem> saveItem(
+  Future<T> saveItem<T>(
       {required FirestoreItem firestoreItem, String? documentId}) async {
     assert(documentId == null || documentId.isNotEmpty);
     if (firestoreItem.documentReference == null) {
@@ -56,56 +94,66 @@ class DatabaseImp extends DatabaseBase {
       await firestoreItem.documentReference
           ?.set(firestoreItem.toJson, SetOptions(merge: true));
     }
-    return firestoreItem;
+    return firestoreItem as T;
   }
 
-  //#region Users
   @override
-  Stream<List<DatabaseUser>?> streamUsers() {
-    return collection(userCollectionPath).snapshots().asyncMap((event) {
-      return event
-          .data()
-          ?.entries
-          .map((entry) => DatabaseUser.fromSnapshot(entry))
-          .toList();
+  Future<void> deleteDocument(String path,
+      {void Function()? onSuccess, void Function()? onError}) async {
+    return await document(path)
+        .delete()
+        .then((_) => onSuccess?.call(), onError: (_) => onError?.call());
+  }
+
+  @override
+  Future<void> setDocumentFields(String path, Map<String, dynamic> json,
+      {void Function()? onSuccess, void Function()? onError}) async {
+    return await document(path)
+        .set(json, SetOptions(merge: true))
+        .then((_) => onSuccess?.call(), onError: (_) => onError?.call());
+  }
+
+  @override
+  Stream<T?> streamTDocument<T>(String path) {
+    return document(path).snapshots().asyncMap((data) {
+      var documentMapEntry = data.document();
+      if (documentMapEntry != null) {
+        var x = _firestoreItemMapFunction<T>()?.call(documentMapEntry) as T;
+        log.d('streamTDocument: Update x == $x');
+
+        return x;
+      }
+      return null;
     });
   }
 
   @override
-  Future<void> setUserProperty(String uid, Map<String, dynamic> json, {Function? onSuccess, Function? onError}) async {
-    return await document("$userCollectionPath/$uid")
-        .set(json, SetOptions(merge: true)).then((_) => onSuccess?.call(), onError: (e) {
-          debugPrint('setUserProperty: error: $e');
-      onError?.call();
-    });
-  }
-
-  @override
-  Future<List<DatabaseUser>?> getUsers() async {
+  Future<List<T>?> getTCollection<T>(String path) async {
     var snapshot = await collection(userCollectionPath).get();
     return snapshot
         .data()
         ?.entries
-        .map((entry) => DatabaseUser.fromSnapshot(entry))
+        .map((entry) => _firestoreItemMapFunction<T>()?.call(entry) as T)
         .toList();
   }
 
   @override
-  Future<DatabaseUser?> getUserById(String uid) async {
-    var data = await document("$userCollectionPath/$uid").get();
-    var doc = data.document();
-    return doc != null ? DatabaseUser.fromSnapshot(doc) : null;
+  Future<T?>? getTDocument<T>(String path) async {
+    var data = await document(path).get();
+    var documentMapEntry = data.document();
+    return documentMapEntry != null
+        ? _firestoreItemMapFunction<T>()?.call(documentMapEntry) as T
+        : null;
   }
 
   @override
-  Stream<DatabaseUser?> streamUserById(String uid) {
-    return document("$userCollectionPath/$uid").snapshots().asyncMap((event) {
-      var documentMapEntry = event.document();
-      return documentMapEntry != null
-          ? DatabaseUser.fromSnapshot(documentMapEntry)
-          : null;
+  Stream<List<T>?> streamTCollection<T>(String path) {
+    return collection(path).snapshots().asyncMap((event) {
+      return event
+          .data()
+          ?.entries
+          .map((entry) => _firestoreItemMapFunction<T>()?.call(entry) as T)
+          .toList();
     });
   }
-
-  //#endregion
 }

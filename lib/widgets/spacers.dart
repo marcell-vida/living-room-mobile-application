@@ -9,6 +9,7 @@ class VerticalSpacer extends StatelessWidget {
   const VerticalSpacer.of13({Key? key}) : size = 13, super(key: key);
   const VerticalSpacer.of20({Key? key}) : size = 20, super(key: key);
   const VerticalSpacer.of23({Key? key}) : size = 23, super(key: key);
+  const VerticalSpacer.of30({Key? key}) : size = 30, super(key: key);
   const VerticalSpacer.of40({Key? key}) : size = 40, super(key: key);
   const VerticalSpacer.of60({Key? key}) : size = 60, super(key: key);
 

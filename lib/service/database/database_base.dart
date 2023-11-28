@@ -1,16 +1,23 @@
-import 'package:living_room/model/base/firestore_item.dart';
-import 'package:living_room/model/database/datbase_user.dart';
+import 'package:living_room/model/database/base/firestore_item.dart';
 
 abstract class DatabaseBase {
-  Future<FirestoreItem> saveItem({required FirestoreItem firestoreItem, String? documentId});
+  //#region General
+  Future<T> saveItem<T>(
+      {required FirestoreItem firestoreItem, String? documentId});
 
-  Future<DatabaseUser?> getUserById(String uid);
+  Future<void> setDocumentFields(String path, Map<String, dynamic> json,
+      {void Function()? onSuccess, void Function()? onError});
 
-  Stream<DatabaseUser?> streamUserById(String uid);
+  Future<void> deleteDocument(String path,
+      {void Function()? onSuccess, void Function()? onError});
 
-  Future<List<DatabaseUser>?> getUsers();
+  Stream<T?> streamTDocument<T>(String path);
 
-  Stream<List<DatabaseUser>?> streamUsers();
+  Future<T?>? getTDocument<T>(String path);
 
-  Future<void> setUserProperty(String uid, Map<String, dynamic> json, {Function? onSuccess, Function? onError});
+  Stream<List<T>?> streamTCollection<T>(
+      String path);
+
+  Future<List<T>?> getTCollection<T>(
+      String path);
 }

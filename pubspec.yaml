@@ -52,6 +52,22 @@ dependencies:
   meta: ^1.9.1
   flutter_floating_bottom_bar: ^1.2.0
   dot_navigation_bar: ^1.0.2
+  circular_profile_avatar: ^2.0.5
+  firebase_storage: ^11.2.7
+  image_picker: ^1.0.4
+  slide_to_confirm: ^1.1.0
+  flutter_launcher_icons: ^0.13.1
+  flutter_datetime_picker_plus: ^2.1.0
+  logger: ^2.0.2+1
+  firebase_messaging: ^14.7.3
+  toggle_switch: ^2.1.0
+  square_percent_indicater: ^0.1.0
+  syncfusion_flutter_charts: ^23.1.44
+  fl_chart: ^0.64.0
+
+flutter_icons:
+  android: true
+  image_path: "assets/images/app_icon.png"
 
 dev_dependencies:
   flutter_test:
@@ -79,6 +95,8 @@ flutter:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

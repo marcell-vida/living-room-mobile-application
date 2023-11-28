@@ -1,10 +1,11 @@
 import 'package:collection/collection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:living_room/extension/results/auth_exception_extension.dart';
-import 'package:living_room/extension/results/sign_up_exception_extension.dart';
-import 'package:living_room/extension/results/success_message_extension.dart';
-import 'package:living_room/extension/results/verify_email_exception_extension.dart';
+import 'package:living_room/extension/result/auth_exception_extension.dart';
+import 'package:living_room/extension/result/sign_up_exception_extension.dart';
+import 'package:living_room/extension/result/success_message_extension.dart';
+import 'package:living_room/extension/result/verify_email_exception_extension.dart';
+import 'package:living_room/main.dart';
 import 'package:living_room/model/authentication/auth_user.dart';
 import 'package:living_room/service/authentication/authentication_base.dart';
 
@@ -15,6 +16,7 @@ class AuthenticationImp extends AuthenticationBase {
     "auth/user-not-found": AuthException.userNotFound,
     "auth/wrong-password": AuthException.wrongPassword,
     "auth/too-many-requests": AuthException.tooManyRequests,
+    "firebase_auth/INVALID_LOGIN_CREDENTIALS": AuthException.userNotFound,
     "firebase_auth/network-request-failed": AuthException.networkRequestFailed
   };
 
@@ -44,7 +46,6 @@ class AuthenticationImp extends AuthenticationBase {
       .userChanges()
       .map((user) => user == null ? null : AuthUser.fromFirebase(user));
 
-
   @override
   AuthUser? get currentUser {
     var firebaseUser = _firebaseAuth.currentUser;
@@ -65,9 +66,7 @@ class AuthenticationImp extends AuthenticationBase {
           .signInWithEmailAndPassword(email: email, password: password)
           .then((_) => onSuccess?.call(), // onSuccess
               onError: (e) {
-        if (kDebugMode) {
-          print("Exception type: ${e.runtimeType}, message: ${e.toString()}");
-        }
+        log.e("Exception type: ${e.runtimeType}, message: ${e.toString()}");
         if (e is FirebaseAuthException) {
           var key = rawSignInExceptions.keys.firstWhereOrNull(
               (element) => e.toString().contains(element) == true);
@@ -79,9 +78,7 @@ class AuthenticationImp extends AuthenticationBase {
         }
       });
     } catch (e) {
-      if (kDebugMode) {
-        print("Outer exception: ${e.toString()}");
-      }
+      log.e("Outer exception: ${e.toString()}");
     }
   }
 
@@ -100,7 +97,8 @@ class AuthenticationImp extends AuthenticationBase {
           .then((_) {
         onSuccess?.call(SuccessMessage.signUpComplete);
       }, onError: (e) {
-        debugPrint("Exception type: ${e.runtimeType}, message: ${e.toString()}");
+        debugPrint(
+            "Exception type: ${e.runtimeType}, message: ${e.toString()}");
         if (e is FirebaseAuthException) {
           var key = rawSignUpExceptions.keys.firstWhereOrNull(
               (element) => e.toString().contains(element) == true);
@@ -124,17 +122,21 @@ class AuthenticationImp extends AuthenticationBase {
       if (!_firebaseAuth.currentUser!.emailVerified) {
         _firebaseAuth.currentUser!.sendEmailVerification().then((_) async {
           onSuccess?.call(SuccessMessage.verificationEmailSent);
-          while(_firebaseAuth.currentUser?.emailVerified != true){
-            debugPrint("Reloading user data, waiting for user email verification");
-            await Future.delayed(const Duration(seconds: 4), () => FirebaseAuth.instance.currentUser?.reload());
+          while (_firebaseAuth.currentUser?.emailVerified != true) {
+            debugPrint(
+                "Reloading user data, waiting for user email verification");
+            await Future.delayed(const Duration(seconds: 4),
+                () => FirebaseAuth.instance.currentUser?.reload());
           }
         }, onError: (e) {
-          debugPrint("Exception type: ${e.runtimeType}, message: ${e.toString()}");
+          debugPrint(
+              "Exception type: ${e.runtimeType}, message: ${e.toString()}");
           if (e is FirebaseAuthException) {
             var key = rawVerifyEmailExceptions.keys.firstWhereOrNull(
-                    (element) => e.toString().contains(element) == true);
+                (element) => e.toString().contains(element) == true);
             onError?.call(key != null
-                ? rawVerifyEmailExceptions[key] ?? VerifyEmailException.emailNotSent
+                ? rawVerifyEmailExceptions[key] ??
+                    VerifyEmailException.emailNotSent
                 : VerifyEmailException.emailNotSent);
           } else {
             onError?.call(VerifyEmailException.emailNotSent);
@@ -144,5 +146,34 @@ class AuthenticationImp extends AuthenticationBase {
     } catch (e) {
       debugPrint("Outer exception: ${e.toString()}");
     }
+  }
+
+  @override
+  Future<void> changePassword(
+      {required String currentPassword,
+      required String newPassword,
+      Function()? onError,
+      Function(SuccessMessage)? onSuccess}) async {
+    User? user = _firebaseAuth.currentUser;
+
+    if (user == null) {
+      onError?.call();
+      return;
+    }
+
+    _firebaseAuth
+        .signInWithEmailAndPassword(
+            email: user.email ?? '', password: currentPassword)
+        .then((value) {
+      _firebaseAuth.currentUser?.updatePassword(newPassword).then(
+        (value) => onSuccess?.call(SuccessMessage.passwordChangeComplete),
+        onError: (error) {
+          log.d('Change password error: ${error.toString()}');
+          onError?.call();
+        },
+      );
+    }, onError: (_) {
+      onError?.call();
+    });
   }
 }

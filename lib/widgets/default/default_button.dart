@@ -4,7 +4,7 @@ import 'package:living_room/widgets/default/default_text.dart';
 
 class DefaultButton extends StatelessWidget {
   final String? text;
-  final Function callback;
+  final Function() callback;
   final double? elevation;
   final Color color;
   final Color? borderColor;
@@ -16,20 +16,19 @@ class DefaultButton extends StatelessWidget {
   final IconData? suffixIcon;
   final BorderRadius? borderRadius;
 
-  const DefaultButton(
-      {Key? key,
-      this.text = '',
-      required this.callback,
-      this.color = AppColors.purple,
-      this.borderColor,
-      this.textColor = AppColors.white,
-      this.isLoading,
-      this.isEnabled,
-      this.showErrorColor,
-      this.leadIcon,
-      this.suffixIcon,
-      this.borderRadius,
-      this.elevation})
+  const DefaultButton({Key? key,
+    this.text = '',
+    required this.callback,
+    this.color = AppColors.purple,
+    this.borderColor,
+    this.textColor = AppColors.white,
+    this.isLoading,
+    this.isEnabled,
+    this.showErrorColor,
+    this.leadIcon,
+    this.suffixIcon,
+    this.borderRadius,
+    this.elevation})
       : super(key: key);
 
   @override
@@ -44,11 +43,12 @@ class DefaultButton extends StatelessWidget {
                 borderRadius: borderRadius ?? Constants.borderRadius),
             minimumSize: const Size.fromHeight(50),
             elevation: elevation ?? (isEnabled == false ? 0 : 3),
+            shadowColor: color,
             backgroundColor: isEnabled == false
                 ? AppColors.purple50
                 : showErrorColor == true
-                    ? AppColors.red
-                    : color),
+                ? AppColors.red
+                : color),
         child: content);
   }
 
@@ -66,26 +66,28 @@ class DefaultButton extends StatelessWidget {
       );
     }
 
-    return Wrap(
-      alignment: WrapAlignment.spaceBetween,
-      runSpacing: 5,
-      spacing: 10,
-      crossAxisAlignment: WrapCrossAlignment.center,
+    return Row(
       children: [
         if (leadIcon != null)
           Icon(
             leadIcon,
             color: textColor,
           ),
+        if(leadIcon == null && suffixIcon != null) Icon(
+          suffixIcon, color: Colors.transparent,),
         if (text != null)
-          DefaultText(
-            text ?? '',
-            textAlign: TextAlign.center,
-            fontWeight: FontWeight.w600,
-            fontSize: 14,
-            color: textColor,
+          Expanded(
+            child: DefaultText(
+              text ?? '',
+              textAlign: TextAlign.center,
+              fontWeight: FontWeight.w600,
+              fontSize: 14,
+              color: textColor,
+            ),
           ),
-        if (suffixIcon != null) Icon(suffixIcon, color: textColor)
+        if (suffixIcon != null) Icon(suffixIcon, color: textColor),
+        if(leadIcon != null && suffixIcon == null) Icon(
+          leadIcon, color: Colors.transparent,)
       ],
     );
   }
